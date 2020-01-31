@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--Android API21及以上引入了控件点击的水波纹效果-->
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+    android:color="#BFBFBF">
+    <item android:drawable="@drawable/bg_common_drawable_ripple_white"></item>
+</ripple>
