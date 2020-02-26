@@ -9,12 +9,15 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.muzi.weshop.common.http.presenter.IBasePresenter;
+import com.muzi.weshop.common.presenter.ApiPresenter;
+
 import butterknife.ButterKnife;
 
-public abstract class BaseFragment extends Fragment {
+public abstract class BaseFragment extends Fragment implements IBasePresenter {
     private View rootView;
     private BaseActivity context;
-
+    public ApiPresenter apiPresenter;
 
     @Nullable
     @Override
@@ -22,6 +25,7 @@ public abstract class BaseFragment extends Fragment {
         rootView = inflater.inflate(attachedLayoutRes() , container , false);
         ButterKnife.bind(this , rootView);
         context = (BaseActivity) getActivity();
+        apiPresenter = new ApiPresenter(getContext() , this);
         initData();
         initViews();
         requestData();
@@ -56,5 +60,15 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public BaseActivity getContext() {
         return context;
+    }
+
+    @Override
+    public void onNext(Object o, int requestCode) {
+        
+    }
+
+    @Override
+    public void onError(Throwable e, int request) {
+
     }
 }

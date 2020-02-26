@@ -1,30 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.gridlayout.widget.GridLayout 
-    android:id="@+id/glClassifyContainer"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/llClassifyContainer"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:orientation="vertical"
-    android:background="@drawable/bg_common_ripple_white">
+    android:layout_height="70dp"
+    android:background="@drawable/bg_common_ripple_white"
+    android:orientation="vertical"
+    android:gravity="center_vertical">
         
-        <ImageView
-            android:id="@+id/imgClassifyContent"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" 
-            android:src="@mipmap/classify_content_01"
-            android:scaleType="centerCrop"
-            app:layout_gravity="center_horizontal"/>
-        
-        <TextView
-            android:id="@+id/tvClassifyContent"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" 
-            android:text="橘色毛衣"
-            android:textSize="16sp"
-            android:textColor="@color/txt_title"
-            android:layout_marginTop="20dp"
-            app:layout_gravity="center_horizontal"
-            android:layout_marginBottom="16dp"/>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="69.5dp"
+    android:orientation="horizontal"
+    android:gravity="center_vertical">
 
-</androidx.gridlayout.widget.GridLayout>
+    <ImageView
+        android:id="@+id/imgCommodityType"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"/>
+
+
+    <TextView
+        android:id="@+id/tvTypeName"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:text="裙子"
+        android:textSize="16sp"
+        android:textColor="@color/txt_color"/>
+
+    <ImageView
+        android:layout_width="12dp"
+        android:layout_height="12dp"
+        android:src="@mipmap/enter"
+        android:layout_marginEnd="16dp"/>
+</LinearLayout>
+    
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/baseLine"
+        android:layout_marginStart="16dp"></View>
+</LinearLayout>

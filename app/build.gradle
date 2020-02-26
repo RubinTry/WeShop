@@ -1,7 +1,23 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.jakewharton.butterknife'
+apply plugin: "com.blankj.bus"
+apply plugin: 'org.greenrobot.greendao'
 
 android {
+    signingConfigs {
+        debug {
+            storeFile file('E:\\AndroidProject\\WeShop\\WeShop.jks')
+            storePassword '123456'
+            keyAlias = 'WeShop'
+            keyPassword '123456'
+        }
+        release {
+            storeFile file('E:\\AndroidProject\\WeShop\\WeShop.jks')
+            storePassword '123456'
+            keyAlias = 'WeShop'
+            keyPassword '123456'
+        }
+    }
     compileSdkVersion 29
     buildToolsVersion "29.0.2"
     defaultConfig {
@@ -22,10 +38,17 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
+    greendao {
+        schemaVersion 2 //数据库版本号// 设置DaoMaster、DaoSession、Dao 包名
+        targetGenDir 'src/main/java'//设置DaoMaster、DaoSession、Dao目录,请注意，这里路径用/不要用.
+        generateTests false //设置为true以自动生成单元测试。
+        targetGenDirTests 'src/main/java' //应存储生成的单元测试的基本目录。默认为 src / androidTest / java。
+    }
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     testImplementation 'junit:junit:4.12'
@@ -43,13 +66,34 @@ dependencies {
     //glide
     implementation 'com.github.bumptech.glide:glide:4.10.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.10.0'
-
     //AndroidX板的multidex，解决了dex分包的64k问题 
     implementation 'androidx.multidex:multidex:2.0.1'
-    //retrofit  okhttp   rxjava
+    //retrofit  okhttp   rxjava 网络请求的
     implementation 'com.squareup.retrofit2:retrofit:2.7.0'
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.7.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.7.0'
     implementation 'com.google.code.gson:gson:2.8.6'
-    implementation("com.squareup.okhttp3:logging-interceptor:4.1.1")
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.1.1'
+    //rx生命周期控制与绑定
+    implementation 'com.trello.rxlifecycle3:rxlifecycle-android:3.0.0'
+    implementation 'com.github.franmontiel:PersistentCookieJar:v1.0.1'
+    //转圈圈的效果
+    implementation 'com.wang.avi:library:2.1.3'
+
+    implementation 'com.orhanobut:hawk:2.0.1'
+    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0'
+    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.30'
+
+
+    //延时搜索
+    implementation 'com.jakewharton.rxbinding3:rxbinding:3.1.0'
+
+
+    //greendao + sqlcipher 实现可加密数据库
+    implementation 'org.greenrobot:greendao:3.2.2'
+    implementation 'net.zetetic:android-database-sqlcipher:4.2.0@aar'
+
+    //微信SDK
+    implementation 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:5.5.8'
+
 }

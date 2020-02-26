@@ -6,14 +6,17 @@
     android:layout_height="match_parent"
     tools:context=".view.activity.MainActivity"
     android:orientation="vertical">
-    
-    <androidx.viewpager.widget.ViewPager
+
+
+<!--    上面的容器-->
+    <com.muzi.weshop.common.widgets.FitSystemWindowViewPager
         android:id="@+id/vpMain"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"></androidx.viewpager.widget.ViewPager>
+        android:layout_weight="1"></com.muzi.weshop.common.widgets.FitSystemWindowViewPager>
 
-    
+
+<!--    底部的导航-->
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tbMain"
         android:layout_width="match_parent"

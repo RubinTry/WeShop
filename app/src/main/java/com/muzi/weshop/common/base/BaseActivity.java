@@ -3,6 +3,7 @@ package com.muzi.weshop.common.base;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.WindowManager;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,33 +13,44 @@ import com.blankj.utilcode.util.SizeUtils;
 import com.logcat.widget.top.Topbar;
 import com.logcat.widget.top.callback.BaseOnBackClickListener;
 import com.muzi.weshop.R2;
+import com.muzi.weshop.common.http.presenter.IBasePresenter;
+import com.muzi.weshop.common.presenter.ApiPresenter;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * @author logcat
+ * @@author 郑天阳
  */
-public abstract class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity extends RxBaseActivity implements IBasePresenter {
     @Nullable
     @BindView(R2.id.mTopBar)
     Topbar topBar;
+    
+    public ApiPresenter apiPresenter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //防止软键盘弹出的时候遮盖EditText
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+        //
         setContentView(attachedLayout());
+        //ButterKnife的绑定
         ButterKnife.bind(this);
 
         //是否隐藏状态栏（就是显示电量的那个地方）
         if(hideStatusBar()){
+            //隐藏标题
             QMUIStatusBarHelper.translucent(this);
         }else{
             BarUtils.setStatusBarColor(this , Color.WHITE);
         }
         BarUtils.setStatusBarLightMode(this , true);
 
+        //这是一个用来请求网络数据的类
+        apiPresenter = new ApiPresenter(this , this);
 
         initViews();
         requestData();
@@ -104,6 +116,7 @@ public abstract class BaseActivity extends AppCompatActivity {
             topBar.setTitleScroll(false);
         }
     }
+
 
 
     /**
@@ -177,5 +190,15 @@ public abstract class BaseActivity extends AppCompatActivity {
         if (topBar != null && !TextUtils.isEmpty(backBtnText)) {
             topBar.setBackBtnText(backBtnText);
         }
+    }
+
+    @Override
+    public void onNext(Object o, int requestCode) {
+        
+    }
+
+    @Override
+    public void onError(Throwable e, int request) {
+
     }
 }

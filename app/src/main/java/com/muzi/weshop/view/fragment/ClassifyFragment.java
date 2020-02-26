@@ -1,5 +1,8 @@
 package com.muzi.weshop.view.fragment;
 
+import android.content.Intent;
+
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -9,9 +12,16 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.muzi.weshop.R;
 import com.muzi.weshop.common.DiffTCallback;
 import com.muzi.weshop.common.base.BaseFragment;
+import com.muzi.weshop.common.contants.ExtraConstants;
+import com.muzi.weshop.common.contants.RequestCodeContants;
+import com.muzi.weshop.model.ClassTypesModel;
 import com.muzi.weshop.model.ClassifyContentModel;
 import com.muzi.weshop.model.RecyclerData;
+import com.muzi.weshop.view.activity.SelectedCommodityListActivity;
 import com.muzi.weshop.view.adapter.ClassifyAdapter;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,12 +32,14 @@ import butterknife.BindView;
  * @author muzi
  * 分类
  */
-public class ClassifyFragment extends BaseFragment {
+public class ClassifyFragment extends BaseFragment implements OnRefreshListener {
     @BindView(R.id.rvCommodityType)
     RecyclerView rvCommodityType;
+    @BindView(R.id.refreshClassify)
+    SmartRefreshLayout refreshClassify;
     private ClassifyAdapter classifyAdapter;
-    private List<ClassifyContentModel> typeList;
-    private List<ClassifyContentModel> clearTypeList;
+    private List<ClassTypesModel> typeList;
+    private List<ClassTypesModel> clearTypeList;
     private DiffUtil.DiffResult typeDiffResult;
 
     @Override
@@ -43,40 +55,53 @@ public class ClassifyFragment extends BaseFragment {
 
     @Override
     protected void initViews() {
-        rvCommodityType.setLayoutManager(new GridLayoutManager(getContext() , 2));
+        rvCommodityType.setLayoutManager(new LinearLayoutManager(getContext()));
         rvCommodityType.setNestedScrollingEnabled(false);
-        classifyAdapter = new ClassifyAdapter(typeList);
+        classifyAdapter = new ClassifyAdapter(R.layout.item_classify_content , typeList , this);
         rvCommodityType.setAdapter(classifyAdapter);
         classifyAdapter.setOnItemClickListener(new ClassifyAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(ClassifyContentModel result) {
-                ToastUtils.showShort(result.getTitle());
+            public void onItemClick(ClassTypesModel result) {
+                Intent intent = new Intent(getContext() , SelectedCommodityListActivity.class);
+                intent.putExtra(ExtraConstants.CLASS_ID , result.getId());
+                startActivity(intent);
             }
         });
+        refreshClassify.setOnRefreshListener(this);
     }
 
     @Override
     protected void requestData() {
-        typeList.add(new ClassifyContentModel(R.mipmap.classify_content_01 , "橘色毛衣"));
-        typeList.add(new ClassifyContentModel(R.mipmap.classify_content_02 , "爱心毛衣"));
-        typeList.add(new ClassifyContentModel(R.mipmap.classify_content_03 , "王炸牛仔裤"));
-        typeList.add(new ClassifyContentModel(R.mipmap.classify_content_04 , "米色毛呢裤"));
-        typeList.add(new ClassifyContentModel(R.mipmap.classify_content_05 , "长靴"));
-        typeList.add(new ClassifyContentModel(R.mipmap.classify_content_06 , "毛毛球鞋"));
-        typeList.add(new ClassifyContentModel(R.mipmap.classify_content_01 , "橘色毛衣"));
-        typeList.add(new ClassifyContentModel(R.mipmap.classify_content_02 , "爱心毛衣"));
-        typeList.add(new ClassifyContentModel(R.mipmap.classify_content_03 , "王炸牛仔裤"));
-        typeList.add(new ClassifyContentModel(R.mipmap.classify_content_04 , "米色毛呢裤"));
-        typeList.add(new ClassifyContentModel(R.mipmap.classify_content_05 , "长靴"));
-        typeList.add(new ClassifyContentModel(R.mipmap.classify_content_06 , "毛毛球鞋"));
-        updateView();
+        apiPresenter.getTypes(1 , 10 , RequestCodeContants.GET_TYPES);
     }
 
-    private void updateView() {
-        typeDiffResult = DiffUtil.calculateDiff(new DiffTCallback<ClassifyContentModel>(clearTypeList , typeList) , false);
-        typeDiffResult.dispatchUpdatesTo(classifyAdapter);
-        classifyAdapter.setDataList(typeList);
-        clearTypeList.clear();
-        clearTypeList.addAll(typeList);
+
+
+    @Override
+    public void onNext(Object o, int requestCode) {
+        super.onNext(o, requestCode);
+        refreshClassify.finishRefresh();
+        refreshClassify.finishLoadMore();
+        switch (requestCode){
+            case RequestCodeContants.GET_TYPES:
+                ClassifyContentModel classifyContentModel = (ClassifyContentModel) o;
+                typeList.clear();
+                typeList.addAll(classifyContentModel.getClassTypes());
+                classifyAdapter.setNewData(typeList);
+                break;
+        }
+    }
+
+
+    @Override
+    public void onError(Throwable e, int request) {
+        super.onError(e, request);
+        refreshClassify.finishRefresh();
+        refreshClassify.finishLoadMore();
+    }
+
+    @Override
+    public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+        requestData();
     }
 }

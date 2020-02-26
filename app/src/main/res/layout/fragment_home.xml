@@ -1,6 +1,127 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:fitsSystemWindows="true">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="?actionBarSize"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        >
 
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="40dp"
+            android:background="@drawable/shape_classify_search"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp">
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:src="@mipmap/search"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="16dp"/>
+            <TextView
+                android:id="@+id/tvSearchGoods"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="48dp"
+                android:gravity="center_vertical|start"
+                android:background="@null"
+                android:textSize="16sp"
+                android:hint="请输入商品名称"
+                android:textColor="#8a8a8a"/>
+        </FrameLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="搜索"
+            android:textSize="16sp"
+            android:textColor="@color/txtDeepGray"
+            android:layout_marginEnd="16dp"/>
+    </LinearLayout>
+    
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp">
+        <com.muzi.weshop.common.widgets.ImageBanner
+            android:id="@+id/imgBanner"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            ></com.muzi.weshop.common.widgets.ImageBanner>
+        
+        <TextView
+            android:id="@+id/tvPageCurrentNum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" 
+            android:text="第1页/共5页"
+            android:layout_gravity="center_horizontal|bottom"
+            android:layout_marginBottom="16dp"
+            android:textSize="14sp"
+            android:textColor="@color/white"/>
+    </FrameLayout>
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" 
+            android:text="店铺购买须知"
+            android:textSize="16sp"
+            android:textColor="@color/txtDeepGray"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"/>
+        
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" 
+            android:text="1.不接急单（1-7天发货）非无理由退还店"
+            android:textSize="16sp"
+            android:textColor="@color/txtDeepGray"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"/>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2.模特实拍 盗图必究 招代理"
+            android:textSize="16sp"
+            android:textColor="@color/txtDeepGray"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="3.支持支付宝微信花呗银行卡"
+            android:textSize="16sp"
+            android:textColor="@color/txtDeepGray"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"/>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="4.不断更新新品，欢迎各位小仙女"
+            android:textSize="16sp"
+            android:textColor="@color/txtDeepGray"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"/>
+    </LinearLayout>
 </LinearLayout>

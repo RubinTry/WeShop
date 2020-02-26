@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="30dp"
+            android:layout_marginBottom="20dp">
+
+            <com.muzi.weshop.common.widgets.ImageBanner
+                android:id="@+id/imgGoodsDetailBanner"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"></com.muzi.weshop.common.widgets.ImageBanner>
+            
+            <TextView
+                android:id="@+id/tvPageIndicator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" 
+                android:text="第1页/共5页"
+                android:textSize="16sp"
+                android:textColor="@color/white"
+                android:layout_gravity="center_horizontal|bottom"
+                android:layout_marginBottom="16dp"/>
+        </FrameLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" 
+            android:text="小熊T恤"
+            android:textSize="16sp"
+            android:layout_marginStart="30dp"
+            android:textColor="@color/txt_color"/>
+        
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" 
+            android:text="￥89.00"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="30dp"
+            android:textColor="@color/mainColor"/>
+        
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@mipmap/gwc"
+            android:layout_gravity="end"
+            android:layout_marginEnd="16dp"/>
+        
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/baseLine"
+            android:layout_marginTop="10dp"></View>
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

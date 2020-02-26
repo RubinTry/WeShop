@@ -1,0 +1,10 @@
+{
+  "BusUtilsClass": "com.blankj.utilcode.util.BusUtils",
+  "rightBus": {
+    "JUMP_TP_SHOPPING_CART": [
+      "{ desc: com.muzi.weshop.view.activity.MainActivity#jumpToShoppingCart(), threadMode: MAIN }",
+      "{ desc: com.muzi.weshop.view.activity.SelectedCommodityListActivity#jumpToShoppingCart(), threadMode: MAIN }"
+    ]
+  },
+  "wrongBus": {}
+}
