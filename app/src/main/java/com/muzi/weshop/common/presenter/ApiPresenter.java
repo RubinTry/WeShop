@@ -30,6 +30,7 @@ import okhttp3.RequestBody;
  */
 public class ApiPresenter extends BasePresenter {
 
+
     /**
      * 构造方法让Presenter层持有View层的引用
      *
@@ -39,14 +40,6 @@ public class ApiPresenter extends BasePresenter {
     public ApiPresenter(Context context, IBasePresenter view) {
         super(context, view);
     }
-
-
-
-    @Override
-    public void request(int requestCode) {
-
-    }
-
 
     /**
      * 登录
@@ -64,12 +57,12 @@ public class ApiPresenter extends BasePresenter {
                 .subscribe(new RxSubscriber<LoginModel>(context) {
                     @Override
                     public void onSuccess(Object o) {
-                        view.onNext(o, requestCode);
+                        view.onNext(o, requestCode);  // <==> 触发BaseActivity的onNext()
                     }
 
                     @Override
                     public void onFail(Throwable e) {
-                        view.onError(e, requestCode);
+                        view.onError(e, requestCode);// <==> 触发BaseActivity的onError()
                     }
                 });
     }

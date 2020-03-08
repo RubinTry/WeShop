@@ -15,6 +15,11 @@ public class MainPagerAdapter extends FragmentPagerAdapter {
         this.pageList = pageList;
     }
 
+    /**
+     * 返回第position个fragment供底层渲染
+     * @param position
+     * @return
+     */
     @NonNull
     @Override
     public Fragment getItem(int position) {

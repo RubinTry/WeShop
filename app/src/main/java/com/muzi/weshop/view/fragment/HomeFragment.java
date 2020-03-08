@@ -45,13 +45,21 @@ public class HomeFragment extends BaseFragment implements ImageBanner.OnPageScro
 
     @Override
     protected void initViews() {
+        //
         imagePagerAdapter = new ImagePagerAdapter(getContext() , imageUrlList);
         imgBanner.setOffscreenPageLimit(5);
         imgBanner.setAdapter(imagePagerAdapter);
         imagePagerAdapter.notifyDataSetChanged();
+
         imgBanner.setCount(imageUrlList.size());
         imgBanner.start();
         imgBanner.setOnPageScrollListener(this);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        imgBanner.start();
     }
 
     @Override
@@ -66,9 +74,12 @@ public class HomeFragment extends BaseFragment implements ImageBanner.OnPageScro
         imgBanner.release();
     }
 
+    /**
+     * 图片翻页监听
+     * @param position
+     */
     @Override
     public void onPageScroll(int position) {
-        //图片翻页监听
         tvPageCurrentNum.setText("第" + (position + 1) +"页/共" + imageUrlList.size() + "页");
     }
     

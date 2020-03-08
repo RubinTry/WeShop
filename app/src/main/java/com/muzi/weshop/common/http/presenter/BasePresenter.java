@@ -21,10 +21,6 @@ public abstract class BasePresenter <V extends IBasePresenter> {
         this.view = view;
     }
 
-    /**
-     * 必须实现的统一请求方法
-     * @param requestCode
-     */
-    public abstract void request(int requestCode);
+
     
 }

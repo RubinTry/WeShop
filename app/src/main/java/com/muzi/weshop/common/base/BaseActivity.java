@@ -37,7 +37,8 @@ public abstract class BaseActivity extends RxBaseActivity implements IBasePresen
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         //
         setContentView(attachedLayout());
-        //ButterKnife的绑定
+        //ButterKnife的绑定，绑定控件以及点击事件之类的，节省代码
+        //https://github.com/JakeWharton/butterknife
         ButterKnife.bind(this);
 
         //是否隐藏状态栏（就是显示电量的那个地方）
@@ -47,9 +48,10 @@ public abstract class BaseActivity extends RxBaseActivity implements IBasePresen
         }else{
             BarUtils.setStatusBarColor(this , Color.WHITE);
         }
+        //LightMode白底黑字,状态栏的主题
         BarUtils.setStatusBarLightMode(this , true);
 
-        //这是一个用来请求网络数据的类
+        //这是一个用来请求网络数据的类,MVP里面的P(Presenter)
         apiPresenter = new ApiPresenter(this , this);
 
         initViews();

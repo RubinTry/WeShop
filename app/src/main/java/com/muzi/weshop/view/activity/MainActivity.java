@@ -107,7 +107,7 @@ public class MainActivity extends BaseActivity {
 
         //绑定 左右滑动控件 的适配器
         mainPagerAdapter = new MainPagerAdapter(getSupportFragmentManager(), FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT, pageList);
-        vpMain.setAdapter(mainPagerAdapter);
+        vpMain.setAdapter(mainPagerAdapter);//viewPager
         //更新UI
         mainPagerAdapter.notifyDataSetChanged();
 

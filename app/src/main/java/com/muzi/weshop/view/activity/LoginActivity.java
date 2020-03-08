@@ -88,6 +88,5 @@ public class LoginActivity extends BaseActivity {
     @Override
     public void onError(Throwable e, int request) {
         super.onError(e, request);
-        
     }
 }

@@ -11,6 +11,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.viewpager.widget.ViewPager;
 
+/**
+ * @author logcat
+ */
 public class ImageBanner extends ViewPager {
     private static final int MESSAGE_WHAT = 1111;
     private Handler bannerHandler;
@@ -38,11 +41,15 @@ public class ImageBanner extends ViewPager {
             public void handleMessage(@NonNull Message msg) {
                 super.handleMessage(msg);
                 if (msg.what == MESSAGE_WHAT) {
+                    //如果pageCount等于0的话，Viewpager会不知道跳转到哪页而出现异常导致闪退
                     if(pageCount != 0){
+                        //翻页
                         setCurrentItem(currentItem);
+                        //传递页码
                         if (onPageScrollListener != null) {
                             onPageScrollListener.onPageScroll(currentItem);
                         }
+                        //页码的大小处理，如果大于总页数就取它的余数
                         if (currentItem < pageCount - 1) {
                             currentItem++;
                         } else {
@@ -52,12 +59,12 @@ public class ImageBanner extends ViewPager {
                             }
                         }
 
-
+                        //每隔多少秒滚动一次
                         if(canScroll){
                             bannerHandler.removeMessages(MESSAGE_WHAT);
                             Message newMsg = new Message();
                             newMsg.what = MESSAGE_WHAT;
-                            bannerHandler.sendMessageDelayed(newMsg, 5000);
+                            bannerHandler.sendMessageDelayed(newMsg, 1000);
                         }
                     }
                 }
@@ -76,6 +83,7 @@ public class ImageBanner extends ViewPager {
     public void start() {
         //开始轮播
         Message msg = new Message();
+        //给写好的线程发送一个消息，消息的what值为MESSAGE_WHAT（1111）
         msg.what = MESSAGE_WHAT;
         bannerHandler.sendMessage(msg);
         pageCount = getChildCount();
@@ -92,6 +100,9 @@ public class ImageBanner extends ViewPager {
     }
 
 
+    /**
+     * 目的：把当前页的位置传给fragment,让TextView显示出当前页数
+     */
     public interface OnPageScrollListener {
         void onPageScroll(int position);
     }
