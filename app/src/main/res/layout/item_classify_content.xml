@@ -4,42 +4,42 @@
     android:layout_width="match_parent"
     android:layout_height="70dp"
     android:background="@drawable/bg_common_ripple_white"
-    android:orientation="vertical"
-    android:gravity="center_vertical">
-        
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="69.5dp"
-    android:orientation="horizontal"
-    android:gravity="center_vertical">
+    android:gravity="center_vertical"
+    android:orientation="vertical">
 
-    <ImageView
-        android:id="@+id/imgCommodityType"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="69.5dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/imgCommodityType"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp" />
 
 
-    <TextView
-        android:id="@+id/tvTypeName"
-        android:layout_width="0dp"
-        android:layout_weight="1"
-        android:layout_height="wrap_content"
-        android:text="裙子"
-        android:textSize="16sp"
-        android:textColor="@color/txt_color"/>
+        <TextView
+            android:id="@+id/tvTypeName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="裙子"
+            android:textColor="@color/txt_color"
+            android:textSize="16sp" />
 
-    <ImageView
-        android:layout_width="12dp"
-        android:layout_height="12dp"
-        android:src="@mipmap/enter"
-        android:layout_marginEnd="16dp"/>
-</LinearLayout>
-    
+        <ImageView
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:layout_marginEnd="16dp"
+            android:src="@mipmap/enter" />
+    </LinearLayout>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
-        android:background="@color/baseLine"
-        android:layout_marginStart="16dp"></View>
+        android:layout_marginStart="16dp"
+        android:background="@color/baseLine"></View>
 </LinearLayout>

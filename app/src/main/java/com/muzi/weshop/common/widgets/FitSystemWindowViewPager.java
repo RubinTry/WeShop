@@ -13,6 +13,10 @@ import androidx.annotation.Nullable;
 import androidx.core.view.ViewCompat;
 import androidx.viewpager.widget.ViewPager;
 
+/**
+ * @author logcat
+ * 自适应沉浸式状态栏的ViewPager
+ */
 public class FitSystemWindowViewPager extends ViewPager {
     public FitSystemWindowViewPager(@NonNull Context context) {
         super(context);

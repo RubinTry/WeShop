@@ -77,7 +77,10 @@ public class MainActivity extends BaseActivity {
             ActivityCompat.requestPermissions(this, mPermissionList, REQUEST_PERMISSION);
         }//请求权限
 
+
+        //用来储存fragment的list
         pageList = new ArrayList<>();
+        //用来储存标题字符串的list
         titleList = new ArrayList<>();
 
 

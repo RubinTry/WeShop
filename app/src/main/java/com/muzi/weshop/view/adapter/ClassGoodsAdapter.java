@@ -63,6 +63,7 @@ public class ClassGoodsAdapter extends BaseQuickAdapter<GoodsModel , BaseViewHol
         });
     }
 
+
     public interface OnItemClickListener{
         void onItemClick(GoodsModel result);
     }

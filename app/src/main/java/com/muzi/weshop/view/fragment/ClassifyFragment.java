@@ -32,15 +32,13 @@ import butterknife.BindView;
  * @author muzi
  * 分类
  */
-public class ClassifyFragment extends BaseFragment implements OnRefreshListener {
+public class ClassifyFragment extends BaseFragment implements OnRefreshListener , ClassifyAdapter.OnItemClickListener {
     @BindView(R.id.rvCommodityType)
     RecyclerView rvCommodityType;
     @BindView(R.id.refreshClassify)
     SmartRefreshLayout refreshClassify;
     private ClassifyAdapter classifyAdapter;
     private List<ClassTypesModel> typeList;
-    private List<ClassTypesModel> clearTypeList;
-    private DiffUtil.DiffResult typeDiffResult;
 
     @Override
     protected int attachedLayoutRes() {
@@ -50,23 +48,19 @@ public class ClassifyFragment extends BaseFragment implements OnRefreshListener 
     @Override
     protected void initData() {
         typeList = new ArrayList<>();
-        clearTypeList = new ArrayList<>();
     }
 
     @Override
     protected void initViews() {
+        //给它一个布局管理器，竖方向罗列下来
         rvCommodityType.setLayoutManager(new LinearLayoutManager(getContext()));
+        //解决recyclerView（列表）与scrollView（常用的一个可滚动的控件）的滑动冲突
         rvCommodityType.setNestedScrollingEnabled(false);
+
         classifyAdapter = new ClassifyAdapter(R.layout.item_classify_content , typeList , this);
         rvCommodityType.setAdapter(classifyAdapter);
-        classifyAdapter.setOnItemClickListener(new ClassifyAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(ClassTypesModel result) {
-                Intent intent = new Intent(getContext() , SelectedCommodityListActivity.class);
-                intent.putExtra(ExtraConstants.CLASS_ID , result.getId());
-                startActivity(intent);
-            }
-        });
+        classifyAdapter.setOnItemClickListener(this);
+
         refreshClassify.setOnRefreshListener(this);
     }
 
@@ -103,5 +97,17 @@ public class ClassifyFragment extends BaseFragment implements OnRefreshListener 
     @Override
     public void onRefresh(@NonNull RefreshLayout refreshLayout) {
         requestData();
+    }
+
+
+    /**
+     * 点击某个条目时触发这个方法
+     * @param result
+     */
+    @Override
+    public void onItemClick(ClassTypesModel result) {
+        Intent intent = new Intent(getContext() , SelectedCommodityListActivity.class);
+        intent.putExtra(ExtraConstants.CLASS_ID , result.getId());
+        startActivity(intent);
     }
 }

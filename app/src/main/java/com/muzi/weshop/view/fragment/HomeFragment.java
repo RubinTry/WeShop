@@ -82,7 +82,7 @@ public class HomeFragment extends BaseFragment implements ImageBanner.OnPageScro
     public void onPageScroll(int position) {
         tvPageCurrentNum.setText("第" + (position + 1) +"页/共" + imageUrlList.size() + "页");
     }
-    
+
     
     @OnClick({R.id.tvSearchGoods})
     void onClick(View view){

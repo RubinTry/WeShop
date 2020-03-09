@@ -25,7 +25,7 @@ import butterknife.ButterKnife;
  */
 public abstract class BaseActivity extends RxBaseActivity implements IBasePresenter {
     @Nullable
-    @BindView(R2.id.mTopBar)
+    @BindView(R2.id.mTopBar)//绑定控件的一个注解，等价于findViewById（ButterKnife框架）
     Topbar topBar;
     
     public ApiPresenter apiPresenter;
@@ -35,7 +35,7 @@ public abstract class BaseActivity extends RxBaseActivity implements IBasePresen
         super.onCreate(savedInstanceState);
         //防止软键盘弹出的时候遮盖EditText
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
-        //
+        //渲染界面
         setContentView(attachedLayout());
         //ButterKnife的绑定，绑定控件以及点击事件之类的，节省代码
         //https://github.com/JakeWharton/butterknife

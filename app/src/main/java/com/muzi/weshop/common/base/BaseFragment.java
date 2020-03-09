@@ -24,7 +24,7 @@ public abstract class BaseFragment extends Fragment implements IBasePresenter {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         rootView = inflater.inflate(attachedLayoutRes() , container , false);
         ButterKnife.bind(this , rootView);
-        context = (BaseActivity) getActivity();
+        context = (BaseActivity) getActivity();//拿到fragment的宿主（activity）
         apiPresenter = new ApiPresenter(getContext() , this);
         initData();
         initViews();

@@ -14,6 +14,9 @@ import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 import java.io.ByteArrayOutputStream;
 
+/**
+ * @author logcat
+ */
 public class WxUtils {
 
     private static Context mContext;

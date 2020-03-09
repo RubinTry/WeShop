@@ -41,6 +41,9 @@ import io.reactivex.disposables.Disposable;
 public class SearchActivity extends BaseActivity implements OnLoadMoreListener {
 
 
+    /**
+     * 在文本框打字的时候，每隔500毫秒搜索一下
+     */
     private static final long INTERVAL = 500;
     @BindView(R.id.edtKeyWord)
     EditText edtKeyWord;
@@ -98,6 +101,7 @@ public class SearchActivity extends BaseActivity implements OnLoadMoreListener {
                     @Override
                     public void onNext(TextViewTextChangeEvent textViewTextChangeEvent) {
                         if(TextUtils.isEmpty(edtKeyWord.getText().toString())){
+                            //关键词为空就显示全部数据
                             goodsList.clear();
                             goodsAdapter.setNewData(goodsList);
                         }else{

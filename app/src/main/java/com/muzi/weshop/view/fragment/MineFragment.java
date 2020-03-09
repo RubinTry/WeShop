@@ -52,7 +52,8 @@ public class MineFragment extends BaseFragment {
                 startActivity(new Intent(getContext() , OrderListActivity.class));
                 break;
             case R.id.llShare:
-                WxUtils.share(getContext() , "http://www.baidu.com");
+                //发起微信分享
+                WxUtils.share(getContext() , "http://d.alphaqr.com/zth9");
                 break;
                 default:
                     break;

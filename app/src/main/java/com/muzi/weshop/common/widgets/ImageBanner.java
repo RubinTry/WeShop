@@ -45,11 +45,11 @@ public class ImageBanner extends ViewPager {
                     if(pageCount != 0){
                         //翻页
                         setCurrentItem(currentItem);
-                        //传递页码
+                        //这是一个接口，用来监听并传递页码
                         if (onPageScrollListener != null) {
                             onPageScrollListener.onPageScroll(currentItem);
                         }
-                        //页码的大小处理，如果大于总页数就取它的余数
+                        //页码的大小处理，如果大于总页数就取它的余数，防止下标越界
                         if (currentItem < pageCount - 1) {
                             currentItem++;
                         } else {
@@ -58,6 +58,8 @@ public class ImageBanner extends ViewPager {
                                 currentItem %= pageCount;
                             }
                         }
+
+
 
                         //每隔多少秒滚动一次
                         if(canScroll){
