@@ -9,6 +9,8 @@ public class CommentsModel {
      * pId : 13
      */
 
+
+
     private int bulous;
     private String comment;
     private int goodsId;

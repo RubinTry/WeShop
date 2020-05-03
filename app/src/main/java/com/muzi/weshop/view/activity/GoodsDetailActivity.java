@@ -154,7 +154,7 @@ public class GoodsDetailActivity extends BaseActivity implements ImageBanner.OnP
             imgAddToShoppingCart.setVisibility(View.VISIBLE);
         }
         initBanner();
-        initDetail();
+        //评论列表
         initRecyclerView();
         titleList = new ArrayList<>();
         titleList.add("商品");
@@ -192,6 +192,7 @@ public class GoodsDetailActivity extends BaseActivity implements ImageBanner.OnP
             }
         });
 
+        //把商品。详情。评论的字写到Tab上去
         for (int i = 0; i < titleList.size(); i++) {
             if (i == 0) {
                 tbGoodsDetail.addTab(tbGoodsDetail.newTab().setText(titleList.get(i)), true);
@@ -205,6 +206,7 @@ public class GoodsDetailActivity extends BaseActivity implements ImageBanner.OnP
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
                 scrollviewFlag = true;
                 tabIndex = tbGoodsDetail.getSelectedTabPosition();
+                //scrollY -> 垂直滚动的原点
                 if (scrollY < llPicDetail.getTop()) {
                     if (tabIndex != 0) {//增加判断，如果滑动的区域是tableIndex=0对应的区域，则不改变tablayout的状态
                         tbGoodsDetail.getTabAt(0).select();
@@ -226,6 +228,10 @@ public class GoodsDetailActivity extends BaseActivity implements ImageBanner.OnP
         refreshGoodsDetail.setOnLoadMoreListener(this);
     }
 
+
+    /**
+     * 评论列表
+     */
     private void initRecyclerView() {
         rvComment.setLayoutManager(new LinearLayoutManager(this));
         rvComment.setNestedScrollingEnabled(false);
@@ -238,7 +244,7 @@ public class GoodsDetailActivity extends BaseActivity implements ImageBanner.OnP
             @Override
             public void onThumbUp(int id, int position) {
                 //点赞
-                apiPresenter.goodsThumbUp(id, 0, RequestCodeContants.THUMB_UP);
+                apiPresenter.goodsThumbUp(id, 0, RequestCodeContants.THUMB_UP);//调用后台点赞接口
                 commentPosition = position;
             }
 
@@ -257,16 +263,10 @@ public class GoodsDetailActivity extends BaseActivity implements ImageBanner.OnP
         rvImgList.setAdapter(longimgAdapter);
     }
 
-    private void initDetail() {
-//        Drawable drawable = ContextCompat.getDrawable(this, R.mipmap.pic_detail);
-//        Bitmap bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(),
-//                drawable.getOpacity() != PixelFormat.OPAQUE ? Bitmap.Config.ARGB_8888 : Bitmap.Config.RGB_565);
-//        Canvas canvas = new Canvas(bitmap);
-//        drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
-//        drawable.draw(canvas);
-//        imgPicDetail.setImageBitmap(bitmap);
-    }
 
+    /**
+     * 轮播图
+     */
     private void initBanner() {
         imageUrlList = new ArrayList<>();
         longImgList = new ArrayList<>();
@@ -291,6 +291,8 @@ public class GoodsDetailActivity extends BaseActivity implements ImageBanner.OnP
                 finish();
                 break;
             case R.id.imgAddToShoppingCart:
+                //发送一个通知，让购物车页面去加赞刚才缓存的数据
+                //用BusUtils传递事件
                 BusUtils.post(BusConstants.JUMP_TO_SHOPPING_CART);
                 finish();
                 break;
@@ -309,6 +311,7 @@ public class GoodsDetailActivity extends BaseActivity implements ImageBanner.OnP
                 if(DbUtils.getInstance().queryGoodsById(id).size() > 0){
                     DbUtils.getInstance().updateGoods(goodsModel);
                 }else{
+                    //如果缓存中没有这个商品，就添加一下
                     DbUtils.getInstance().insertGoods(goodsModel);
                 }
                 ToastUtils.showShort("添加成功");
@@ -352,9 +355,11 @@ public class GoodsDetailActivity extends BaseActivity implements ImageBanner.OnP
                 if (commentListModel.getCommentDtos() != null) {
                     if (commentPageNum == 1) {
                         commentList.clear();
+                        //addAll()把新数据加进去
                         commentList.addAll(commentListModel.getCommentDtos());
                         commentAdapter.setNewData(commentList);
                     } else {
+                        //上拉加载的新数据
                         commentAdapter.addData(commentListModel.getCommentDtos());
                     }
                 }
@@ -377,6 +382,7 @@ public class GoodsDetailActivity extends BaseActivity implements ImageBanner.OnP
                 break;
 
             case RequestCodeContants.THUMB_UP:
+
                 ToastUtils.showShort("点赞成功");
                 int oldBulous = commentList.get(commentPosition).getBulous();
                 oldBulous++;
@@ -431,12 +437,22 @@ public class GoodsDetailActivity extends BaseActivity implements ImageBanner.OnP
         refreshGoodsDetail.finishRefresh();
     }
 
+
+    /**
+     * 下拉刷新
+     * @param refreshLayout
+     */
     @Override
     public void onRefresh(@NonNull RefreshLayout refreshLayout) {
         commentPageNum = 1;
         requestData();
     }
 
+
+    /**
+     * 往上拉的时候加载新数据
+     * @param refreshLayout
+     */
     @Override
     public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
         commentPageNum++;

@@ -74,6 +74,13 @@ public class ImageBanner extends ViewPager {
         };
     }
 
+
+    /**
+     *   {@link #onPageScrolled(int, float, int)   这个方法是Viewpager里的方法，每滚动一次页面就调用一下}.
+     * @param position   当前页数
+     * @param offset  滚动的偏移值
+     * @param offsetPixels
+     */
     @Override
     protected void onPageScrolled(int position, float offset, int offsetPixels) {
         super.onPageScrolled(position, offset, offsetPixels);
@@ -96,7 +103,11 @@ public class ImageBanner extends ViewPager {
     public void setCount(int count) {
         pageCount = count;
     }
-    
+
+
+    /**
+     *  停止滚动
+     */
     public void release(){
         canScroll = false;
     }

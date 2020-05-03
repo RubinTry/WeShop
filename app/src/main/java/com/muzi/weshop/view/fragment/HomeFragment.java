@@ -47,7 +47,7 @@ public class HomeFragment extends BaseFragment implements ImageBanner.OnPageScro
     protected void initViews() {
         //
         imagePagerAdapter = new ImagePagerAdapter(getContext() , imageUrlList);
-        imgBanner.setOffscreenPageLimit(5);
+        imgBanner.setOffscreenPageLimit(imageUrlList.size());
         imgBanner.setAdapter(imagePagerAdapter);
         imagePagerAdapter.notifyDataSetChanged();
 

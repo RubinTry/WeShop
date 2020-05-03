@@ -95,8 +95,8 @@ public class ShoppingCartFragment extends BaseFragment implements OnLoadMoreList
                 }
 
 
-                if(goodsModel.getSelected()){
-                    totalCount ++;
+                if (goodsModel.getSelected()) {
+                    totalCount++;
                 }
 
                 totalPrice += goodsModel.getPrice();
@@ -118,26 +118,29 @@ public class ShoppingCartFragment extends BaseFragment implements OnLoadMoreList
                     }
 
 
-                    if(goodsModel.getSelected()){
-                        totalCount --;
+                    if (goodsModel.getSelected()) {
+                        totalCount--;
                     }
-                    totalPrice -= goodsModel.getPrice();
+
+                    if (totalPrice > goodsModel.getPrice()) {
+                        totalPrice -= goodsModel.getPrice();
+                    }
                     tvTotalPrice.setText("合计：￥" + totalPrice + ".00");
                     tvGoToPay.setText("去结算(" + totalCount + ")");
 
-                }else{
+                } else {
                     ToastUtils.showShort("最少买一件哦");
                 }
             }
 
             @Override
             public void onChecked(boolean isChecked, GoodsModel goodsModel) {
-                if(isChecked){
+                if (isChecked) {
                     totalCount += goodsModel.getCount();
 
                     //统计总价
                     totalPrice += goodsModel.getPrice() * goodsModel.getCount();
-                }else{
+                } else {
                     totalCount -= goodsModel.getCount();
 
                     //统计总价
@@ -145,7 +148,6 @@ public class ShoppingCartFragment extends BaseFragment implements OnLoadMoreList
                 }
                 tvGoToPay.setText("去结算(" + totalCount + ")");
                 tvTotalPrice.setText("合计：￥" + totalPrice + ".00");
-
 
 
             }
@@ -174,24 +176,24 @@ public class ShoppingCartFragment extends BaseFragment implements OnLoadMoreList
     private void loadCacheData() {
         orderList.clear();
         List<GoodsModel> cachesGoodsList = DbUtils.getInstance().queryAllGoods();
-        if(cachesGoodsList != null){
+        if (cachesGoodsList != null) {
             for (GoodsModel goodsModel : cachesGoodsList) {
-                if(goodsModel.getCount() != 0){
+                if (goodsModel.getCount() != 0) {
                     orderList.add(goodsModel);
                 }
             }
         }
         for (GoodsModel goodsModel : orderList) {
-            if(goodsModel.getSelected()){
+            if (goodsModel.getSelected()) {
                 totalPrice += (goodsModel.getPrice() * goodsModel.getCount());
                 totalCount += goodsModel.getCount();
             }
         }
-        if(totalCount == 0){
-            ckSelectAll.setChecked(false);
-        }else{
-            ckSelectAll.setChecked(true);
-        }
+//        if(totalCount == 0){
+//            ckSelectAll.setChecked(false);
+//        }else{
+//            ckSelectAll.setChecked(true);
+//        }
         tvTotalPrice.setText("合计：￥" + totalPrice + ".00");
         tvGoToPay.setText("去结算(" + totalCount + ")");
         shoppingCartAdapter.setNewData(orderList);
@@ -226,16 +228,16 @@ public class ShoppingCartFragment extends BaseFragment implements OnLoadMoreList
     }
 
 
-    @OnClick({R.id.tvGoToPay , R.id.tvDeleteGoods , R.id.tvEdit})
-    void onClick(View view){
-        switch (view.getId()){
+    @OnClick({R.id.tvGoToPay, R.id.tvDeleteGoods, R.id.tvEdit})
+    void onClick(View view) {
+        switch (view.getId()) {
             case R.id.tvEdit:
-                if(!isEditing){
+                if (!isEditing) {
                     //进入编辑状态
                     isEditing = true;
                     tvEdit.setText("完成");
                     tvDeleteGoods.setVisibility(View.VISIBLE);
-                }else{
+                } else {
                     isEditing = false;
                     tvEdit.setText("编辑");
                     tvDeleteGoods.setVisibility(View.GONE);
@@ -244,17 +246,19 @@ public class ShoppingCartFragment extends BaseFragment implements OnLoadMoreList
 
                 break;
             case R.id.tvDeleteGoods:
+
+                //删除
                 int orderCount = 0;
                 for (int i = 0; i < orderList.size(); i++) {
-                    if(orderList.get(i).getSelected()){
+                    if (orderList.get(i).getSelected()) {
                         orderList.get(i).setCount(0);
                         DbUtils.getInstance().updateGoods(orderList.get(i));
-                        orderCount ++;
+                        orderCount++;
                     }
                 }
 
-                //如果没有未删除的数据
-                if(orderCount == 0){
+                //如果没有要删除的数据
+                if (orderCount == 0) {
                     ckSelectAll.setChecked(false);
                 }
                 loadCacheData();
@@ -265,18 +269,21 @@ public class ShoppingCartFragment extends BaseFragment implements OnLoadMoreList
                 //选中的条数
                 int selectedCount = 0;
                 for (GoodsModel goodsModel : orderList) {
-                    if(goodsModel.getCount() != 0 && goodsModel.getSelected()){
-                        orderRequestList.add(new OrderRequestModel(goodsModel.getId() , goodsModel.getCount() , goodsModel.getPrice() , LoginManager.getInstance().getPersonalId()));
+                    //如果这个商品数量大于0而且被选中了，说明要买
+                    if (goodsModel.getCount() != 0 && goodsModel.getSelected()) {
+                        orderRequestList.add(new OrderRequestModel(goodsModel.getId(), goodsModel.getCount(), goodsModel.getPrice(), LoginManager.getInstance().getPersonalId()));
                     }
                 }
-                if(selectedCount == 0){
+                if (selectedCount == 0) {
                     ToastUtils.showShort("最少勾选一件商品哦");
                     return;
                 }
-                apiPresenter.addOrder(orderRequestList , RequestCodeContants.ADD_ORDER);
+
+                //下单接口
+                apiPresenter.addOrder(orderRequestList, RequestCodeContants.ADD_ORDER);
                 break;
-                default:
-                    break;
+            default:
+                break;
         }
     }
 
@@ -284,14 +291,14 @@ public class ShoppingCartFragment extends BaseFragment implements OnLoadMoreList
     @Override
     public void onNext(Object o, int requestCode) {
         super.onNext(o, requestCode);
-        switch (requestCode){
+        switch (requestCode) {
             case RequestCodeContants.ADD_ORDER:
                 //调用支付宝/微信支付的过程略，直接跳转至订单列表
                 ToastUtils.showShort("下单成功");
-                startActivity(new Intent(getContext() , OrderListActivity.class));
+                startActivity(new Intent(getContext(), OrderListActivity.class));
                 break;
-                default:
-                    break;
+            default:
+                break;
         }
     }
 }

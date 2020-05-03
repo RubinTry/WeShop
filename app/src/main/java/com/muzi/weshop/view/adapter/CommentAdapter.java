@@ -28,9 +28,17 @@ public class CommentAdapter extends BaseQuickAdapter<CommentsModel , BaseViewHol
         super(layoutResId, data);
     }
 
+
+    /**
+     * 渲染数据
+     * @param helper
+     * @param item
+     */
     @Override
     protected void convert(BaseViewHolder helper, CommentsModel item) {
+        //渲染用户名
         helper.setText(R.id.tvCommentNickName , item.getAccount());
+        //渲染评论的内容
         helper.setText(R.id.tvCommentContent , item.getComment());
 
 

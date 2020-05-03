@@ -17,6 +17,7 @@ import retrofit2.HttpException;
 
 /**
  * @@author 郑天阳
+ * RxJava
  */
 public abstract class RxSubscriber<T> implements Observer {
     private String TAG = this.getClass().getSimpleName();
@@ -50,6 +51,11 @@ public abstract class RxSubscriber<T> implements Observer {
         loadingDialog.show();
     }
 
+
+    /**
+     * 没有网络问题的情况下，服务端接口调用成功执行这个方法
+     * @param o
+     */
     @Override
     public void onNext(Object o) {
         dismissDialog();
@@ -63,6 +69,8 @@ public abstract class RxSubscriber<T> implements Observer {
         }
 
         onSuccess(o);
+
+        //取消掉订阅
         if (!disposable.isDisposed()) {
             disposable.dispose();
         }
@@ -83,6 +91,13 @@ public abstract class RxSubscriber<T> implements Observer {
      */
     public abstract void onFail(Throwable e);
 
+
+
+
+    /**
+     * 没有网络问题的情况下，服务端接口调用成功
+     * @param o
+     */
     @Override
     public void onError(Throwable e) {
         dismissDialog();

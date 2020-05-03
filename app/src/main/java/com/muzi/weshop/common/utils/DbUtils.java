@@ -10,6 +10,10 @@ import org.greenrobot.greendao.query.QueryBuilder;
 
 import java.util.List;
 
+/**
+ * @author 郑天阳
+ * 数据库存储工具，基于Greendao框架
+ */
 public class DbUtils {
     private static final class SingleTon{
         public static final DbUtils INSTANCE = new DbUtils();
